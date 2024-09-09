@@ -30,7 +30,15 @@ class QuickUsbLinux extends _QuickUsbDesktop {
   QuickUsbLinux() {
     // _libusb = Libusb(DynamicLibrary.open('${File(Platform.resolvedExecutable).parent.path}/lib/libusb-1.0.23.so'));
     // Load from the OS. Pretend it is already installed.
-    _libusb = Libusb(DynamicLibrary.open("/usr/lib/${SysInfo.kernelArchitecture.name.toLowerCase()}-linux-gnu/libusb-1.0.so.0"));
+    switch (SysInfo.kernelArchitecture) {
+      case ProcessorArchitecture.x86_64:
+        _libusb = Libusb(DynamicLibrary.open("/usr/lib/x86_64-linux-gnu/libusb-1.0.so.0"));
+        break;
+      case ProcessorArchitecture.arm64:
+        _libusb = Libusb(DynamicLibrary.open("/usr/lib/aarch64-linux-gnu/libusb-1.0.so.0"));
+        break;
+    }
+    
   }
 }
 
