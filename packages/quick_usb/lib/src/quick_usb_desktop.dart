@@ -6,6 +6,7 @@ import 'package:ffi/ffi.dart' as ffi;
 import 'package:flutter/foundation.dart';
 import 'package:libusb/libusb64.dart';
 import 'package:quick_usb/src/common.dart';
+import 'package:system_info2/system_info2.dart';
 
 import 'quick_usb_platform_interface.dart';
 import 'utils.dart';
@@ -32,7 +33,10 @@ class QuickUsbLinux extends _QuickUsbDesktop {
   // For example/.dart_tool/flutter_build/generated_main.dart
   static registerWith() {
     QuickUsbPlatform.instance = QuickUsbLinux();
-    _libusb = Libusb(DynamicLibrary.open('${File(Platform.resolvedExecutable).parent.path}/lib/libusb-1.0.23.so'));
+    // _libusb = Libusb(DynamicLibrary.open('${File(Platform.resolvedExecutable).parent.path}/lib/libusb-1.0.23.so'));
+
+    // Load from the OS. Pretend it is already installed.
+    _libusb = Libusb(DynamicLibrary.open("/usr/lib/${SysInfo.kernelArchitecture.name.toLowerCase()}-linux-gnu/libusb-0.1.so.4"));
   }
 }
 
