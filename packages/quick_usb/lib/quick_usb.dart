@@ -10,15 +10,10 @@ export 'src/common.dart';
 export 'src/quick_usb_android.dart';
 export 'src/quick_usb_desktop.dart';
 
-bool _manualDartRegistrationNeeded = true;
+var _shouldChoose = true;
 
 QuickUsbPlatform get _platform {
-  // This is to manually endorse Dart implementations until automatic
-  // registration of Dart plugins is implemented. For details see
-  // https://github.com/flutter/flutter/issues/52267.
-  if (_manualDartRegistrationNeeded) {
-    // Only do the initial registration if it hasn't already been overridden
-    // with a non-default instance.
+  if (_shouldChoose) {
     if (Platform.isAndroid) {
       QuickUsbPlatform.instance = QuickUsbAndroid();
     } else if (Platform.isWindows) {
@@ -27,8 +22,8 @@ QuickUsbPlatform get _platform {
       QuickUsbPlatform.instance = QuickUsbMacos();
     } else if (Platform.isLinux) {
       QuickUsbPlatform.instance = QuickUsbLinux();
-    }
-    _manualDartRegistrationNeeded = false;
+    } 
+    _shouldChoose = false;
   }
 
   return QuickUsbPlatform.instance;
