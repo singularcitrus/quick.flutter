@@ -19,7 +19,8 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE flutter)
 target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 
 # List of absolute paths to libraries that should be bundled with the plugin
-#set(quick_usb_bundled_libraries
-#  "${CMAKE_CURRENT_SOURCE_DIR}/libusb-1.0.23.so"
-#  PARENT_SCOPE
-#)
+set(quick_usb_bundled_libraries
+  "${CMAKE_CURRENT_SOURCE_DIR}/libusb-1.0.23-amd64.so"
+  "${CMAKE_CURRENT_SOURCE_DIR}/libusb-1.0.23-arm64.so"
+  PARENT_SCOPE
+)
